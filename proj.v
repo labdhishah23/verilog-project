@@ -1,7 +1,6 @@
 `timescale 1ns/1ps
 
 module rv32i_cpu_tb;
-
     reg clk;
     reg reset;
 
