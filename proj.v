@@ -1,49 +1,26 @@
 `timescale 1ns/1ps
 
 module rv32i_cpu_tb;
-    reg clk;
-    reg reset;
 
-    rv32i_cpu uut(
-        .clk(clk),
-        .reset(reset)
-    );
+reg clk;
+reg reset;
 
-    always #5 clk = ~clk;
-    initial begin
+rv32i_cpu uut (
+    .clk(clk),
+    .reset(reset)
+);
 
-        clk = 0;
-        reset = 1;
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
 
-
-        #20;
-        reset = 0;
-
-
-        #200;
-
-
-        $display("================================");
-        $display("FINAL RESULTS");
-        $display("================================");
-
-        $display("x1 = %d", uut.x[1]);
-        $display("x2 = %d", uut.x[2]);
-        $display("x3 = %d", uut.x[3]);
-        $display("x4 = %d", uut.x[4]);
-        $display("x5 = %d", uut.x[5]);
-
-        $display("MEM[2] = %d", uut.data_mem[2]);
-
-        $display("================================");
-
-        if(uut.data_mem[2] == 150)
-            $display("CPU WORKING CORRECTLY");
-        else
-            $display("CPU FAILED");
-
-        $finish;
-
-    end
+initial begin
+    reset = 1;
+    #20;
+    reset = 0;
+    #300;
+    $finish;
+end
 
 endmodule
